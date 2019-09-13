@@ -11,7 +11,7 @@ namespace ServerRunner
         static void Main(string[] args)
         {
 
-            byte[] bytes = new byte[256];
+            byte[] buffer = new byte[10240];
             IPAddress localhost = IPAddress.Parse("127.0.0.1");
 
             TcpListener listener = new TcpListener(localhost, 13000);
@@ -24,26 +24,30 @@ namespace ServerRunner
             while(true)
             {
                 Console.WriteLine("Before client");
-                var client = listener.AcceptTcpClient();
-                Console.WriteLine("After client");
-                var stream = client.GetStream();
-
-                var readCount = stream.Read(bytes, 0, bytes.Length);
-                while (readCount != 0)
+                using (var client = listener.AcceptTcpClient())
                 {
-                    var readString = Encoding.ASCII.GetString(bytes, 0, readCount);
-                    data.Append(readString);
-                    readCount = stream.Read(bytes, 0, bytes.Length);
+                    Console.WriteLine("After client");
+                    using (var clientSocket = client.Client)
+                    {
+
+                        int receivedCount = clientSocket.Receive(buffer);
+                        var readString = Encoding.ASCII.GetString(buffer, 0, receivedCount);
+
+                        Console.WriteLine(readString);
+
+                        var message = @"HTTP/1.1 200 OK
+Server: Sedc Demo Server
+
+Hello from SEDC";
+                        var messageBytes = Encoding.ASCII.GetBytes(message);
+
+                        clientSocket.Send(messageBytes);
+
+                        //stream.Write(messageBytes, 0, messageBytes.Length);
+                        //stream.Flush();
+                        //stream.Close();
+                    }
                 }
-
-                Console.WriteLine(data.ToString());
-
-                var message = " Hello from SEDC";
-                var messageBytes = Encoding.ASCII.GetBytes(message);
-                stream.Write(messageBytes, 0, messageBytes.Length);
-                stream.Flush();
-                stream.Close();
-                client.Close();
             }
         }
     }
