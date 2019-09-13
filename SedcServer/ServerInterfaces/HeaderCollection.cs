@@ -11,6 +11,14 @@ namespace ServerInterfaces
             data = initialData;
         }
 
+        public static HeaderCollection Empty
+        {
+            get
+            {
+                return new HeaderCollection(new Dictionary<string, string>());
+            }
+        }
+
         public string GetCookie()
         {
             return data["Cookie"];

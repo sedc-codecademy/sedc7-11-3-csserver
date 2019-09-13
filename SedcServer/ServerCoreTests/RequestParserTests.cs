@@ -38,10 +38,10 @@ Cookie: _ga=GA1.1.405632844.1539592429; x-access-token=eyJhbGciOiJIUzI1NiIsInR5c
             // 1. Arrange
             RequestParser parser = new RequestParser();
             Method expected = Method.Put;
-            string requestString = @"PUT / sadsadsa / sadsads / sadsad / asdsa HTTP / 1.1
+            string requestString = @"PUT /sadsadsa/sadsads/sadsad/asdsa HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Indla29zbGF2IiwiQ291bnRyeSI6Ik1hY2Vkb25pYSIsIm5iZiI6MTU2NzQ1Mzg2MSwiZXhwIjoxNTY3NDU3NDYxLCJpYXQiOjE1Njc0NTM4NjF9.YkAwmtzYGPMWUK1x5deRIu3mEcoRktDLOiZ3U3LVToM
-Content - Type: application / json
-User - Agent: PostmanRuntime / 7.16.3
+Content - Type: application/json
+User - Agent: PostmanRuntime/7.16.3
 Accept: */*
 Cache-Control: no-cache
 Postman-Token: 4c085ee0-a559-486e-a9c6-406823700d7a

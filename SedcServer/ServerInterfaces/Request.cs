@@ -14,5 +14,14 @@ namespace ServerInterfaces
         public string Query { get; set; }
         public HeaderCollection Headers { get; set; }
         public string Body { get; set; }
+
+        public static Request EmptyRequest = new Request
+        {
+            Method = Method.None,
+            Path = string.Empty,
+            Query = string.Empty,
+            Headers = HeaderCollection.Empty,
+            Body = string.Empty
+        };
     }
 }

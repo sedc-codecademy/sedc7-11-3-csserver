@@ -15,6 +15,10 @@ namespace ServerCore.Requests
             logger.Debug($"Received {receivedCount} bytes from socket");
             var readString = Encoding.ASCII.GetString(buffer, 0, receivedCount);
             logger.Debug(readString);
+            if (string.IsNullOrEmpty(readString))
+            {
+                return Request.EmptyRequest;
+            }
 
             var parser = new RequestParser();
             var result = parser.Parse(readString);

@@ -38,10 +38,10 @@ namespace ServerCore
                         {
                             var request = RequestProcessor.ProcessRequest(clientSocket, logger);
 
-                            var message = @"HTTP/1.1 200 OK
+                            var message = $@"HTTP/1.1 200 OK
 Server: Sedc Demo Server
 
-HODOR";
+HODOR {request.Method}";
                             var messageBytes = Encoding.ASCII.GetBytes(message);
                             logger.Debug($"Sending {messageBytes.Length} bytes to socket");
                             clientSocket.Send(messageBytes);

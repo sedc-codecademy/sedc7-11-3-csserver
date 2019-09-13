@@ -2,6 +2,7 @@
 {
     public enum Method
     {
+        None,
         Get,
         Post,
         Put,
