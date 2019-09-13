@@ -11,7 +11,7 @@ namespace ServerRunner
         static void Main(string[] args)
         {
 
-            byte[] bytes = new byte[256];
+            byte[] buffer = new byte[10240];
             IPAddress localhost = IPAddress.Parse("127.0.0.1");
 
             TcpListener listener = new TcpListener(localhost, 13000);
@@ -20,29 +20,26 @@ namespace ServerRunner
 
             Console.WriteLine("Started listening");
 
-            StringBuilder data = new StringBuilder();
-            while(true)
+            while (true)
             {
-                Console.WriteLine("Before client");
                 var client = listener.AcceptTcpClient();
-                Console.WriteLine("After client");
-                var stream = client.GetStream();
+                var clientSocket = client.Client;
 
-                var readCount = stream.Read(bytes, 0, bytes.Length);
-                while (readCount != 0)
-                {
-                    var readString = Encoding.ASCII.GetString(bytes, 0, readCount);
-                    data.Append(readString);
-                    readCount = stream.Read(bytes, 0, bytes.Length);
-                }
+                var receivedCount = clientSocket.Receive(buffer);
+                var request = Encoding.UTF8.GetString(buffer, 0, receivedCount);
 
-                Console.WriteLine(data.ToString());
+                Console.WriteLine(request);
 
-                var message = " Hello from SEDC";
-                var messageBytes = Encoding.ASCII.GetBytes(message);
-                stream.Write(messageBytes, 0, messageBytes.Length);
-                stream.Flush();
-                stream.Close();
+                StringBuilder sb = new StringBuilder($"HTTP/1.1 200 OK\r\nServer: SEDC Data Web Server\r\n");
+                var payload = "HELLO FROM SEDC Server";
+                var payloadBytes = Encoding.UTF8.GetBytes(payload);
+                sb.AppendLine($"Content-Length: {payloadBytes.Length}");
+                sb.AppendLine();
+                sb.AppendLine(payload);
+                var responseBytes = Encoding.UTF8.GetBytes(sb.ToString());
+
+                clientSocket.Send(responseBytes);
+                clientSocket.Close();
                 client.Close();
             }
         }
