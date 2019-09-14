@@ -41,7 +41,12 @@ namespace ServerCore
                             var message = $@"HTTP/1.1 200 OK
 Server: Sedc Demo Server
 
-HODOR {request.Method}";
+HODOR {request.Method}
+Path: {request.Path}
+Query: {request.Query}
+Body: {request.Body}
+Headers: {request.Headers}
+";
                             var messageBytes = Encoding.ASCII.GetBytes(message);
                             logger.Debug($"Sending {messageBytes.Length} bytes to socket");
                             clientSocket.Send(messageBytes);

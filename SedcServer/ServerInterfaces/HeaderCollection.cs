@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace ServerInterfaces
 {
@@ -29,5 +31,19 @@ namespace ServerInterfaces
             data["Cookie"] = cookie;
         }
 
+        public string GetHeader(string header)
+        {
+            return data[header];
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var kvp in data)
+            {
+                sb.AppendLine($"{kvp.Key}: {kvp.Value}");
+            }
+            return sb.ToString();
+        }
     }
 }

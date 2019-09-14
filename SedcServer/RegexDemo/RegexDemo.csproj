@@ -6,8 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ServerCore\ServerCore.csproj" />
-    <ProjectReference Include="..\ServerInterfaces\ServerInterfaces.csproj" />
+    <None Update="regex-01.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
