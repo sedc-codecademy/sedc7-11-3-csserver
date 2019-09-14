@@ -9,7 +9,7 @@ namespace ServerCore.Requests
 {
     public class RequestParser
     {
-        public static readonly Regex RequestLineRegex = new Regex(@"^(.*) (.*) HTTP\/1.1$");
+        public static readonly Regex RequestLineRegex = new Regex(@"^([A-Z]+)\s\/([^\s]*)\sHTTP\/1\.1$");
 
         public Request Parse(string requestData)
         {
