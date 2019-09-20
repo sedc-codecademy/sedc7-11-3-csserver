@@ -17,6 +17,7 @@ namespace ServerCore.Requests
             logger.Debug(readString);
             if (string.IsNullOrEmpty(readString))
             {
+                logger.Info("Detected empty request");
                 return Request.EmptyRequest;
             }
 

@@ -11,7 +11,7 @@ namespace ServerInterfaces
     {
         public Method Method { get; set; }
         public string Path { get; set; }
-        public string Query { get; set; }
+        public QueryParamCollection Query { get; set; }
         public HeaderCollection Headers { get; set; }
         public string Body { get; set; }
 
@@ -19,7 +19,7 @@ namespace ServerInterfaces
         {
             Method = Method.None,
             Path = string.Empty,
-            Query = string.Empty,
+            Query = QueryParamCollection.Empty,
             Headers = HeaderCollection.Empty,
             Body = string.Empty
         };

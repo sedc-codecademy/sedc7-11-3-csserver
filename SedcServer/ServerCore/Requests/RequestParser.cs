@@ -28,7 +28,7 @@ namespace ServerCore.Requests
             }
 
             var path = match.Groups[2].Value;
-            var query = match.Groups[3].Value;
+            var query = new QueryParamCollection(match.Groups[3].Value);
             // to-do: map headers, querystring, body, etc...
 
             var headerLines = lines.Skip(1).TakeWhile(line => !string.IsNullOrEmpty(line));
