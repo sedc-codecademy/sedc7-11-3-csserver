@@ -15,8 +15,7 @@ namespace ServerCore.Responses
                 Body = $@"HODOR { request.Method}
 Path: { request.Path}
 Query: { request.Query}
-Body: { request.Body}
-Headers: { request.Headers}"
+Body: { request.Body}"
             };
 
         }

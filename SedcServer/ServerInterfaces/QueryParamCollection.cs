@@ -29,6 +29,20 @@ namespace ServerInterfaces
             }
         }
 
+        public bool HasParam(string paramName)
+        {
+            return data.ContainsKey(paramName);
+        }
+
+        public string GetParam(string paramName)
+        {
+            if (!data.ContainsKey(paramName))
+            {
+                return string.Empty;
+            }
+            return data[paramName];
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
