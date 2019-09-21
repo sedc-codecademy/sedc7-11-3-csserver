@@ -10,4 +10,10 @@
     <ProjectReference Include="..\ServerInterfaces\ServerInterfaces.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="ubava_slika.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

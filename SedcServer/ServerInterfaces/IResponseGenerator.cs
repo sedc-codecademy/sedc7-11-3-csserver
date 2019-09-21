@@ -6,6 +6,8 @@ namespace ServerInterfaces
 {
     public interface IResponseGenerator
     {
+        int Count { get; }
+
         Response Generate(Request request, ILogger logger);
     }
 }
