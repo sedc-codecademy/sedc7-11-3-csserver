@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading.Tasks;
 using ServerCore.Logger;
 using ServerCore.Requests;
 using ServerCore.Responses;
@@ -26,7 +27,7 @@ namespace ServerCore
             ServerName = serverOptions.ServerName;
         }
 
-        public void Start()
+        public async Task Run()
         {
             try
             {
@@ -40,7 +41,7 @@ namespace ServerCore
 
                 while (true)
                 {
-                    using (var client = listener.AcceptTcpClient())
+                    using (var client = await listener.AcceptTcpClientAsync())
                     {
                         logger.Info("Accepted a client");
                         using (var clientSocket = client.Client)
