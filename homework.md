@@ -4,8 +4,9 @@
 
 - Do something about them :)
 
-## Handle folder requests by providing an index file (in the `StaticResponseGenerator` plugin)
+## Handle folder requests by providing an index file 
 
+The code for this is in the `StaticResponseGenerator` plugin.
 - Handle when an index.html file exists
 - Handle when an index.html file does not exists (404)
 
