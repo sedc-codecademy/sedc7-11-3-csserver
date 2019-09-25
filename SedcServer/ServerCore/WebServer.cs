@@ -31,13 +31,31 @@ namespace ServerCore
             responseFactory = new ResponseFactory();
         }
 
-        public WebServer Use<T>() where T: IResponseGenerator, new()
+        public WebServer UseResponseGenerator<T>() where T: IResponseGenerator, new()
         {
             var responseGenerator = new T();
             responseFactory.RegisterGenerator(responseGenerator);
             return this;
         }
 
+        public WebServer UseResponseGenerator(IResponseGenerator responseGenerator)
+        {
+            responseFactory.RegisterGenerator(responseGenerator);
+            return this;
+        }
+
+        public WebServer UseResponsePostProcessor(IResponsePostProcessor responsePostProcessor)
+        {
+            responseFactory.RegisterPostProcessor(responsePostProcessor);
+            return this;
+        }
+
+        public WebServer UseResponsePostProcessor<T>() where T : IResponsePostProcessor, new()
+        {
+            var responsePostProcessor = new T();
+            responseFactory.RegisterPostProcessor(responsePostProcessor);
+            return this;
+        }
 
         public async Task Run()
         {
@@ -66,6 +84,8 @@ namespace ServerCore
                             var generator = responseFactory.GetGenerator(request, logger);
                             var response = await generator.Generate(request, logger);
                             // we can have an extension here, that modifies the generated response
+                            response = await responseFactory.RunPostProcessors(response, logger);
+
                             response.Send(clientSocket, serverOptions);
                         }
                     }

@@ -15,10 +15,13 @@ namespace ServerCore.Responses
             logger.Debug("Start sending response");
             var messageBytes = new byte[0];
 
+            var constantHeaders = $@"HTTP/1.1 {response.ResponseCode.GetValue()} {response.ResponseCode.GetMessage()}
+Server: {serverOptions.ServerName}
+Content-Type: {response.ContentType}";
+
             if (response.Type == ResponseType.Text)
             {
-                var message = $@"HTTP/1.1 200 OK
-Server: {serverOptions.ServerName}
+                var message = $@"{constantHeaders}
 
 {response.Body}
 ";
@@ -27,9 +30,7 @@ Server: {serverOptions.ServerName}
 
             if (response.Type == ResponseType.Binary)
             {
-                var message = $@"HTTP/1.1 200 OK
-Server: {serverOptions.ServerName}
-Content-Type: image/jpeg
+                var message = $@"{constantHeaders}
 
 ";
                 messageBytes = Encoding.ASCII.GetBytes(message);

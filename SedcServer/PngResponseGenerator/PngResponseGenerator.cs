@@ -20,7 +20,8 @@ namespace PngResponseGeneratorLib
             return new Response
             {
                 Bytes = bytes,
-                Type = ResponseType.Binary
+                Type = ResponseType.Binary,
+                ContentType = "image/png"
             };
         }
 

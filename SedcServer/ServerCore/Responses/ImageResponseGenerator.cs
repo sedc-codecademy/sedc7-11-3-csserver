@@ -32,7 +32,8 @@ namespace ServerCore.Responses
             return new Response
             {
                 Bytes = cache[request.Path],
-                Type = ResponseType.Binary
+                Type = ResponseType.Binary,
+                ContentType = ContentTypes.JpegImage
             };
         }
 

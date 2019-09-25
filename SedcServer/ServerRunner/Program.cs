@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using PngResponseGeneratorLib;
 using ServerCore;
 using ServerInterfaces;
+using ServerPlugins;
 
 namespace ServerRunner
 {
@@ -15,7 +16,13 @@ namespace ServerRunner
         static void Main(string[] args)
         {
             var server = new WebServer();
-            server.Use<PngResponseGenerator>();
+            server
+                .UseResponseGenerator<PngResponseGenerator>()
+                .UseResponseGenerator<PostMethodResponseGenerator>()
+                .UseResponseGenerator(new StaticResponseGenerator(@"C:\Users\Weko\OneDrive\Memes"))
+                .UseResponseGenerator(new StaticResponseGenerator(@"C:\Source\SEDC\sedc7-04-ajs\g2\Workshop\Game\Code"))
+                .UseResponsePostProcessor<NotFoundPostProcessor>();
+            
 
             var result = server.Run();
             result.Wait();
