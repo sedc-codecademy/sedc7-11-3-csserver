@@ -14,6 +14,10 @@ namespace ServerCore.Requests
             {
                 return Method.Put;
             }
+            if (method == "POST")
+            {
+                return Method.Post;
+            }
             return Method.None;
         }
     }

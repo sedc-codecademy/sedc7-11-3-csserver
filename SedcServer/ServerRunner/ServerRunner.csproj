@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PngResponseGenerator\PngResponseGeneratorLib.csproj" />
     <ProjectReference Include="..\ServerCore\ServerCore.csproj" />
     <ProjectReference Include="..\ServerInterfaces\ServerInterfaces.csproj" />
   </ItemGroup>

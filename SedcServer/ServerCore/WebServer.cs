@@ -15,9 +15,11 @@ namespace ServerCore
         private readonly ILogger logger;
 
         public int Port { get; private set; }
+
         public string ServerName { get; private set; }
 
         private WebServerOptions serverOptions;
+        private ResponseFactory responseFactory;
 
         public WebServer(WebServerOptions options = null)
         {
@@ -25,7 +27,17 @@ namespace ServerCore
             logger = serverOptions.Logger;
             Port = serverOptions.Port;
             ServerName = serverOptions.ServerName;
+
+            responseFactory = new ResponseFactory();
         }
+
+        public WebServer Use<T>() where T: IResponseGenerator, new()
+        {
+            var responseGenerator = new T();
+            responseFactory.RegisterGenerator(responseGenerator);
+            return this;
+        }
+
 
         public async Task Run()
         {
@@ -46,12 +58,14 @@ namespace ServerCore
                         logger.Info("Accepted a client");
                         using (var clientSocket = client.Client)
                         {
-                            // https://steve-yegge.blogspot.com/2006/03/execution-in-kingdom-of-nouns.html
+                            // we can have an extension here, that changes the raw data
                             var request = RequestProcessor.ProcessRequest(clientSocket, logger);
+                            // we can have an extension here, that modifies the parsed request
 
-                            var generator = ResponseFactory.GetGenerator(request, logger);
-                            var response = generator.Generate(request, logger);
-
+                            // we can have extensions inside the factory
+                            var generator = responseFactory.GetGenerator(request, logger);
+                            var response = await generator.Generate(request, logger);
+                            // we can have an extension here, that modifies the generated response
                             response.Send(clientSocket, serverOptions);
                         }
                     }

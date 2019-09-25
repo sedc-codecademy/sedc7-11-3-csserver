@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using ServerInterfaces;
 
 namespace ServerCore.Responses
@@ -21,7 +22,7 @@ namespace ServerCore.Responses
             ShowHeaders = showHeaders;
         }
 
-        public Response Generate(Request request, ILogger logger)
+        public async Task<Response> Generate(Request request, ILogger logger)
         {
             Count += 1;
             logger.Debug($"Start generating response #{Count}");
@@ -40,6 +41,17 @@ Body: { request.Body}");
                 Body = body.ToString()
             };
 
+        }
+
+        public bool IsInterested(Request request, ILogger logger)
+        {
+            logger.Info("BaseResponseGenerator determining interest");
+            if (ShowHeaders == HeaderOptions.ShowHeaders)
+            {
+                return request.Query.HasParam("headers") 
+                    && request.Query.GetParam("headers").Equals(true.ToString(), StringComparison.InvariantCultureIgnoreCase);
+            }
+            return true;
         }
     }
 }

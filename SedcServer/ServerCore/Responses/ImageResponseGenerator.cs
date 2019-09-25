@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using ServerInterfaces;
 
 namespace ServerCore.Responses
@@ -13,7 +14,7 @@ namespace ServerCore.Responses
 
         public int Count { get; private set; } = 0;
 
-        public Response Generate(Request request, ILogger logger)
+        public async Task<Response> Generate(Request request, ILogger logger)
         {
             Count += 1;
             logger.Debug($"Start generating response #{Count}");
@@ -22,7 +23,7 @@ namespace ServerCore.Responses
             {
                 logger.Debug($"Loading image {request.Path} to cache");
                 // delay 10s to simulate long load times
-                Thread.Sleep(10000);
+                await Task.Delay(10000);
                 var bytes = File.ReadAllBytes("ubava_slika.jpg");
                 cache.Add(request.Path, bytes);
             }
@@ -33,6 +34,13 @@ namespace ServerCore.Responses
                 Bytes = cache[request.Path],
                 Type = ResponseType.Binary
             };
+        }
+
+        public bool IsInterested(Request request, ILogger logger)
+        {
+            logger.Info("ImageResponseGenerator determining interest");
+
+            return request.Path.EndsWith(".jpg");
         }
     }
 }

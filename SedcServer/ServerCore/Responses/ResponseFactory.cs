@@ -1,24 +1,29 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using ServerInterfaces;
 
 namespace ServerCore.Responses
 {
-    internal static class ResponseFactory
+    internal class ResponseFactory
     {
-        private static readonly ImageResponseGenerator imagerg = new ImageResponseGenerator();
+        private List<IResponseGenerator> registeredGenerators = new List<IResponseGenerator>();
 
-        internal static IResponseGenerator GetGenerator(Request request, ILogger logger)
+        public ResponseFactory ()
         {
-            if (request.Query.HasParam("headers") && request.Query.GetParam("headers").Equals(true.ToString(), StringComparison.InvariantCultureIgnoreCase))
-            {
-                return new BaseResponseGenerator(HeaderOptions.ShowHeaders);
-            }
+            registeredGenerators.Add(new BaseResponseGenerator(HeaderOptions.ShowHeaders));
+            registeredGenerators.Add(new ImageResponseGenerator());
+            registeredGenerators.Add(new BaseResponseGenerator());
+        }
 
-            if (request.Path.EndsWith(".jpg"))
-            {
-                return imagerg;
-            }
-            return new BaseResponseGenerator();
+        internal IResponseGenerator GetGenerator(Request request, ILogger logger)
+        {
+            return registeredGenerators.First(generator => generator.IsInterested(request, logger));
+        }
+
+        internal void RegisterGenerator(IResponseGenerator generator)
+        {
+            registeredGenerators.Insert(0, generator);
         }
     }
 }
