@@ -2,6 +2,7 @@
 {
     internal enum SqlResponseCommand
     {
+        Error,
         GeneralInfo,
         TableList
     }

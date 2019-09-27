@@ -36,7 +36,7 @@ namespace ServerPlugins.SqlServer
                 case SqlResponseCommand.GeneralInfo:
                     return await new GeneralInfo(ConnectionString).GetResponse();
                 case SqlResponseCommand.TableList:
-                    return new TableList(ConnectionString).GetResponse();
+                    return await new TableList(ConnectionString).GetResponse();
             }
             return Response.EmptyResponse;
         }
@@ -54,7 +54,7 @@ namespace ServerPlugins.SqlServer
                     return SqlResponseCommand.TableList;
                 }
             }
-            return SqlResponseCommand.GeneralInfo;
+            return SqlResponseCommand.Error;
         }
 
         public bool IsInterested(Request request, ILogger logger)
