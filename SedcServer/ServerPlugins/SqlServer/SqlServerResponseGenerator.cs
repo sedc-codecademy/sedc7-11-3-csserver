@@ -23,7 +23,7 @@ namespace ServerPlugins.SqlServer
 
         public async Task<Response> Generate(Request request, ILogger logger)
         {
-            var path = request.Path.Split("/").Skip(2);
+            var path = request.Path.Split("/", StringSplitOptions.RemoveEmptyEntries).Skip(2);
             var command = GetCommand(path);
             var response = await GetResponse(command);
             return response;
@@ -31,14 +31,28 @@ namespace ServerPlugins.SqlServer
 
         private async Task<Response> GetResponse(SqlResponseCommand command)
         {
+            //var responder = command switch {
+            //    SqlResponseCommand.GeneralInfo => new GeneralInfo(ConnectionString),
+            //    SqlResponseCommand.TableList => new TableList(ConnectionString),
+            //    _ => new Error()
+            //};
+            //return responder.GetResponse();
+
+            ICommandResponder responder;
             switch (command)
             {
                 case SqlResponseCommand.GeneralInfo:
-                    return await new GeneralInfo(ConnectionString).GetResponse();
+                    responder = new GeneralInfo(ConnectionString);
+                    break;
                 case SqlResponseCommand.TableList:
-                    return await new TableList(ConnectionString).GetResponse();
+                    responder = new TableList(ConnectionString);
+                    break;
+                default:
+                    responder = new Error();
+                    break;
             }
-            return Response.EmptyResponse;
+
+            return await responder.GetResponse();
         }
 
         private SqlResponseCommand GetCommand(IEnumerable<string> path)

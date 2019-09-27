@@ -8,7 +8,7 @@ using ServerInterfaces;
 
 namespace ServerPlugins.SqlServer.CommandResponders
 {
-    class TableList
+    class TableList: ICommandResponder
     {
         private string ConnectionString { get; set; }
 
@@ -17,7 +17,7 @@ namespace ServerPlugins.SqlServer.CommandResponders
             ConnectionString = connectionString;
         }
 
-        internal async Task<Response> GetResponse()
+        public async Task<Response> GetResponse()
         {
             var cnn = new SqlConnection(ConnectionString);
             cnn.Open();
