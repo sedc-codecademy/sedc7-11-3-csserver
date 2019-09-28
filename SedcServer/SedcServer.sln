@@ -19,9 +19,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AwaitAsyncDemo", "AwaitAsyn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncAwaitForms", "AsyncAwaitForms\AsyncAwaitForms.csproj", "{1BAF24FD-BEEA-434E-9A38-651F4725BC16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PngResponseGeneratorLib", "PngResponseGenerator\PngResponseGeneratorLib.csproj", "{A085AA83-C4A6-45F7-90D7-FA915C8D82D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PngResponseGeneratorLib", "PngResponseGenerator\PngResponseGeneratorLib.csproj", "{A085AA83-C4A6-45F7-90D7-FA915C8D82D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerPlugins", "ServerPlugins\ServerPlugins.csproj", "{BEA20F44-3D7E-4DF4-B391-F5F3769B4037}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerPlugins", "ServerPlugins\ServerPlugins.csproj", "{BEA20F44-3D7E-4DF4-B391-F5F3769B4037}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReflectionDemo", "ReflectionDemo\ReflectionDemo.csproj", "{AAFEBD1E-FD47-46AF-8FFF-D014E96324CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{BEA20F44-3D7E-4DF4-B391-F5F3769B4037}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEA20F44-3D7E-4DF4-B391-F5F3769B4037}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEA20F44-3D7E-4DF4-B391-F5F3769B4037}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AAFEBD1E-FD47-46AF-8FFF-D014E96324CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AAFEBD1E-FD47-46AF-8FFF-D014E96324CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AAFEBD1E-FD47-46AF-8FFF-D014E96324CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AAFEBD1E-FD47-46AF-8FFF-D014E96324CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
