@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerPlugins", "ServerPlug
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReflectionDemo", "ReflectionDemo\ReflectionDemo.csproj", "{AAFEBD1E-FD47-46AF-8FFF-D014E96324CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisposableDemo", "DisposableDemo\DisposableDemo.csproj", "{C390C477-0D3B-420A-9307-2ADCA842A913}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{AAFEBD1E-FD47-46AF-8FFF-D014E96324CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AAFEBD1E-FD47-46AF-8FFF-D014E96324CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AAFEBD1E-FD47-46AF-8FFF-D014E96324CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C390C477-0D3B-420A-9307-2ADCA842A913}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C390C477-0D3B-420A-9307-2ADCA842A913}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C390C477-0D3B-420A-9307-2ADCA842A913}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C390C477-0D3B-420A-9307-2ADCA842A913}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
