@@ -39,8 +39,9 @@ namespace ServerPlugins.SqlServer.CommandResponders
                             var objectDictionary = new Dictionary<string, string>();
                             foreach (var column in schema)
                             {
-                                objectDictionary.Add(column.ColumnName, dr.GetString(column.ColumnOrdinal.Value));
+                                objectDictionary.Add(column.ColumnName, dr.GetValue(column.ColumnOrdinal.Value).ToString());
                             }
+                            results.Add(objectDictionary);
                         }
 
                         var body = SqlHelpers.GenerateJsonData(results);
