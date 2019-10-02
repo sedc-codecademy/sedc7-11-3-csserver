@@ -22,7 +22,7 @@ namespace ServerRunner
                     .UseResponseGenerator<PngResponseGenerator>()
                     .UseResponseGenerator<PostMethodResponseGenerator>()
                     .UseResponseGenerator(new StaticResponseGenerator(@"C:\Users\Weko\OneDrive\Memes"))
-                    .UseResponseGenerator(new StaticResponseGenerator(@"C:\Source\SEDC\sedc7-04-ajs\g2\Workshop\Game\Code"))
+                    .UseResponseGenerator(new PublicResponseGenerator(@"C:\Source\SEDC\sedc7-04-ajs\g2\Workshop\Game\Code"))
                     .UseResponsePostProcessor<NotFoundPostProcessor>()
                     .UseResponseGenerator(new SqlServerResponseGenerator("Books", "Server=.;Database=Books-2;Trusted_Connection=True;"))
                     .UseResponseGenerator(new SqlServerResponseGenerator("DSDS", "Server=.;Database=OneCrew.QA.DSDS;Trusted_Connection=True;"))

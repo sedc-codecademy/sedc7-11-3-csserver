@@ -23,13 +23,15 @@ namespace ServerPlugins.SqlServer
 
         public async Task<Response> Generate(Request request, ILogger logger)
         {
-            var path = request.Path.Split("/", StringSplitOptions.RemoveEmptyEntries).Skip(2);
-            var command = GetCommand(path);
-            var response = await GetResponse(command);
+            if (request == null)
+            {
+                request = Request.EmptyRequest;
+            }
+            var response = await GetResponse(request, logger);
             return response;
         }
 
-        private async Task<Response> GetResponse(SqlResponseCommand command)
+        private async Task<Response> GetResponse(Request request, ILogger logger)
         {
             //var responder = command switch {
             //    SqlResponseCommand.GeneralInfo => new GeneralInfo(ConnectionString),
@@ -38,6 +40,8 @@ namespace ServerPlugins.SqlServer
             //};
             //return responder.GetResponse();
 
+            var path = request.Path.Split("/", StringSplitOptions.RemoveEmptyEntries).Skip(2);
+            var command = GetCommand(path);
             ICommandResponder responder;
             switch (command)
             {
@@ -47,6 +51,18 @@ namespace ServerPlugins.SqlServer
                 case SqlResponseCommand.TableList:
                     responder = new TableList(ConnectionString);
                     break;
+                case SqlResponseCommand.TableData:
+                    {
+                        var tableName = path.Skip(1).First();
+                        responder = new TableData(ConnectionString, tableName);
+                        break;
+                    }
+                case SqlResponseCommand.TableSchema:
+                    {
+                        var tableName = path.Skip(1).First();
+                        responder = new TableSchema(ConnectionString, tableName);
+                        break;
+                    }
                 default:
                     responder = new Error();
                     break;
@@ -57,6 +73,7 @@ namespace ServerPlugins.SqlServer
 
         private SqlResponseCommand GetCommand(IEnumerable<string> path)
         {
+            // this code could be better, but it doesn't have to
             if (path.Count() == 0)
             {
                 return SqlResponseCommand.GeneralInfo;
@@ -66,6 +83,20 @@ namespace ServerPlugins.SqlServer
                 if (path.First() == "tables")
                 {
                     return SqlResponseCommand.TableList;
+                }
+            }
+            if (path.Count() == 2)
+            {
+                if (path.First() == "tables")
+                {
+                    return SqlResponseCommand.TableData;
+                }
+            }
+            if (path.Count() == 3)
+            {
+                if ((path.First() == "tables") && (path.Skip(2).First() == "schema"))
+                {
+                    return SqlResponseCommand.TableSchema;
                 }
             }
             return SqlResponseCommand.Error;

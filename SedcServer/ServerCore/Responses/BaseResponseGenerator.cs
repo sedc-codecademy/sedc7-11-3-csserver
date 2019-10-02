@@ -12,7 +12,7 @@ namespace ServerCore.Responses
         ShowHeaders
     }
 
-    public class BaseResponseGenerator : IResponseGenerator
+    internal class BaseResponseGenerator : IResponseGenerator
     {
         public HeaderOptions ShowHeaders { get; private set; }
         public int Count { get; private set; } = 0;

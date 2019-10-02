@@ -10,7 +10,7 @@ namespace ServerPlugins.SqlServer.CommandResponders
 {
     class TableList: ICommandResponder
     {
-        private string ConnectionString { get; set; }
+        public string ConnectionString { get; private set; }
 
         public TableList(string connectionString)
         {

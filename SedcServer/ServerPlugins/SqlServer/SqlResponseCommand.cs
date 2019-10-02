@@ -4,6 +4,8 @@
     {
         Error,
         GeneralInfo,
-        TableList
+        TableList,
+        TableData,
+        TableSchema
     }
 }

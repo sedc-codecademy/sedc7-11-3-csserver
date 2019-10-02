@@ -18,7 +18,7 @@ namespace ServerPlugins
             FolderPath = Path.GetFullPath(folderName);
         }
 
-        public async Task<Response> Generate(Request request, ILogger logger)
+        public virtual async Task<Response> Generate(Request request, ILogger logger)
         {
             var path = string.Join(Path.DirectorySeparatorChar, request.Path.Split("/").Skip(2));
             var fullPath = Path.Combine(FolderPath, path);
@@ -37,7 +37,7 @@ namespace ServerPlugins
             };
         }
 
-        public bool IsInterested(Request request, ILogger logger)
+        public virtual bool IsInterested(Request request, ILogger logger)
         {
             var path = $"static/{FolderName}";
             return request.Path.StartsWith(path, StringComparison.InvariantCultureIgnoreCase);
