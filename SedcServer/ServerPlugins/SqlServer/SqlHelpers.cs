@@ -9,8 +9,11 @@ namespace ServerPlugins.SqlServer
     {
         public static string GenerateJsonData(List<Dictionary<string, string>> data)
         {
-            var objectStrings = data.Select(item => GenerateJsonData(item));
-            return string.Empty;
+            StringBuilder sb = new StringBuilder();
+            sb.Append("[");
+            sb.Append(string.Join(",", data.Select(item => GenerateJsonData(item))));
+            sb.Append("]");
+            return sb.ToString();
         }
 
         public static string GenerateJsonData(Dictionary<string, string> item)
