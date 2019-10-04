@@ -7,13 +7,16 @@ namespace ServerPlugins
 {
     public class PublicResponseGenerator : StaticResponseGenerator
     {
-        public PublicResponseGenerator(string folderName) : base(folderName)
+        public string UrlPath { get; private set; }
+
+        public PublicResponseGenerator(string folderName, string urlPath) : base(folderName)
         {
+            UrlPath = urlPath;
         }
 
         public override bool IsInterested(Request request, ILogger logger)
         {
-            var path = $"public/{FolderName}";
+            var path = $"public/{UrlPath}";
             return request.Path.StartsWith(path, StringComparison.InvariantCultureIgnoreCase);
         }
     }
