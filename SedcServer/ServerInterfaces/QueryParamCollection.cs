@@ -43,6 +43,11 @@ namespace ServerInterfaces
             return data[paramName];
         }
 
+        public IEnumerable<KeyValuePair<string, string>> GetAllParams()
+        {
+            return data.AsEnumerable().ToList().AsReadOnly();
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

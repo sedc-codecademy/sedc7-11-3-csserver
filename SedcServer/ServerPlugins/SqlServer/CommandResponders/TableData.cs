@@ -11,11 +11,13 @@ namespace ServerPlugins.SqlServer.CommandResponders
     {
         public string ConnectionString { get; private set; }
         public string TableName { get; private set; }
+        public QueryParamCollection QueryParams { get; set; }
 
-        public TableData(string connectionString, string tableName)
+        public TableData(string connectionString, string tableName, QueryParamCollection queryParams)
         {
             ConnectionString = connectionString;
             TableName = tableName;
+            QueryParams = queryParams;
         }
 
         public async Task<Response> GetResponse()
@@ -23,8 +25,18 @@ namespace ServerPlugins.SqlServer.CommandResponders
             using (var cnn = new SqlConnection(ConnectionString))
             {
                 cnn.Open();
-                using (var command = new SqlCommand($@"Select * from {TableName}", cnn))
+                // !!!AGAIN, THIS IS WIDE OPEN TO SQL INJECTION, USE A DYNAMIC SQL LIBRARY IF YOU REALLY NEED THIS KIND OF CODE!!!
+                var sql = $@"Select * from {TableName}";
+                var filterClauses = QueryParams.GetAllParams().Select(param => $"{param.Key} like '{param.Value}%'");
+                var whereClause = string.Join(" and ", filterClauses);
+                if (!string.IsNullOrEmpty(whereClause))
                 {
+                    sql = $"{sql} where {whereClause}";
+                }
+
+                using (var command = new SqlCommand(sql, cnn))
+                {
+
                     using (var dr = await command.ExecuteReaderAsync())
                     {
                         var schema = dr.GetColumnSchema();

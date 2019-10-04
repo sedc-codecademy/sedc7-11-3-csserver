@@ -54,7 +54,7 @@ namespace ServerPlugins.SqlServer
                 case SqlResponseCommand.TableData:
                     {
                         var tableName = path.Skip(1).First();
-                        responder = new TableData(ConnectionString, tableName);
+                        responder = new TableData(ConnectionString, tableName, request.Query);
                         break;
                     }
                 case SqlResponseCommand.TableSchema:
